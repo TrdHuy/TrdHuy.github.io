@@ -77,6 +77,8 @@
                <tr>
                     <th>File Name</th>
                     <th>File Path</th>
+                    <th>Project id</th>
+                    <th>Report creation time</th>
                </tr>
           </thead>
           <tbody id="fileTableBody">
@@ -84,6 +86,18 @@
      </table>
 
      <script>
+          function ticksToDate(ticks) {
+               // Ticks từ ngày 1/1/0001, cần trừ đi số ticks từ 1/1/1970 (Unix epoch)
+               const ticksPerSecond = 10000000; // 10 triệu ticks mỗi giây
+               const unixEpochTicks = 621355968000000000; // Ticks từ 1/1/0001 đến 1/1/1970
+
+               // Chuyển đổi tick sang thời gian Unix timestamp (giây)
+               const unixTime = (ticks - unixEpochTicks) / ticksPerSecond;
+
+               // Chuyển đổi Unix timestamp sang đối tượng Date
+               return new Date(unixTime * 1000).toLocaleString(); // Chuyển đổi giây sang mili giây
+          }
+
           // Xóa dữ liệu sessionStorage khi trang được tải lại
           window.addEventListener('load', function () {
                sessionStorage.removeItem('githubFiles');
@@ -134,7 +148,8 @@
 
                     if (response.ok) {
                          const data = await response.json();
-                         const files = data.tree.filter(item => item.type === 'blob' && item.path.endsWith('.html'));
+                         // Lọc các tệp trong hoặc dưới thư mục CoverageReport
+                         const files = data.tree.filter(item => item.path.startsWith(folderPath) && item.type === 'blob' && item.path.endsWith('.html'));
                          sessionStorage.setItem('githubFiles', JSON.stringify(files));
                          displayFiles(files);
                          document.getElementById('myModal').style.display = 'none';
@@ -151,9 +166,16 @@
                fileTableBody.innerHTML = '';
 
                files.forEach(file => {
+                    const pathParts = file.path.split('/');
+                    const projectName = pathParts[pathParts.length - 3];
+                    const timestamp = pathParts[pathParts.length - 2];
+                    const creationDate = ticksToDate(parseInt(timestamp)); // Chuyển đổi từ tick sang thời gian
+
                     const row = document.createElement('tr');
                     const nameCell = document.createElement('td');
                     const pathCell = document.createElement('td');
+                    const projectCell = document.createElement('td');
+                    const dateCell = document.createElement('td');
 
                     // Tạo thẻ liên kết cho tên tệp
                     // const link = document.createElement('a');
@@ -164,13 +186,18 @@
                     nameCell.textContent = file.path.split('/').pop(); // Lấy tên tệp
                     // Tạo thẻ liên kết cho đường dẫn tệp
                     const pathLink = document.createElement('a');
-                    pathLink.href = `https://github.com/TrdHuy/TrdHuy.github.io/${file.path}`;
+                    pathLink.href = `https://trdhuy.github.io/${file.path}`;
                     pathLink.textContent = file.path;
                     pathLink.target = '_blank'; // Mở liên kết trong tab mới
                     pathCell.appendChild(pathLink);
 
+                    projectCell.textContent = projectName;
+                    dateCell.textContent = creationDate;
+
                     row.appendChild(nameCell);
                     row.appendChild(pathCell);
+                    row.appendChild(projectCell);
+                    row.appendChild(dateCell);
                     fileTableBody.appendChild(row);
                });
 
