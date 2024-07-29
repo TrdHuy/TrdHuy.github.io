@@ -100,19 +100,21 @@
 
           // Xóa dữ liệu sessionStorage khi trang được tải lại
           window.addEventListener('load', function () {
-               sessionStorage.removeItem('githubFiles');
+               localStorage.removeItem('githubDataTrees');
           });
 
           var modal = document.getElementById("myModal");
           var btn = document.getElementById("loadButton");
           var span = document.getElementsByClassName("close")[0];
+          const folderPath = 'CoverageReport'; // Thay đổi bằng đường dẫn đến folder trong repo của bạn
 
           btn.onclick = function () {
-               const cachedFiles = sessionStorage.getItem('githubFiles');
+               const cachedFiles = localStorage.getItem('githubDataTrees');
 
                if (cachedFiles) {
                     const files = JSON.parse(cachedFiles);
-                    displayFiles(files);
+                    const filteredFiles = files.filter(item => item.path.startsWith(folderPath) && item.type === 'blob' && item.path.endsWith('.html'));
+                    displayFiles(filteredFiles, files);
                } else {
                     modal.style.display = "block";
                }
@@ -135,7 +137,6 @@
           async function loadFiles(token) {
                const user = 'TrdHuy'; // Thay đổi bằng tên repo của bạn
                const repo = 'TrdHuy.github.io'; // Thay đổi bằng tên repo của bạn
-               const folderPath = 'CoverageReport'; // Thay đổi bằng đường dẫn đến folder trong repo của bạn
                const branch = 'master'; // Thay đổi bằng đường dẫn đến folder trong repo của bạn
                const url = `https://api.github.com/repos/${user}/${repo}/git/trees/${branch}?recursive=1`;
 
@@ -150,8 +151,8 @@
                          const data = await response.json();
                          // Lọc các tệp trong hoặc dưới thư mục CoverageReport
                          const files = data.tree.filter(item => item.path.startsWith(folderPath) && item.type === 'blob' && item.path.endsWith('.html'));
-                         sessionStorage.setItem('githubFiles', JSON.stringify(files));
-                         displayFiles(files);
+                         localStorage.setItem('githubDataTrees', JSON.stringify(data.tree));
+                         await displayFiles(files, data.tree);
                          document.getElementById('myModal').style.display = 'none';
                     } else {
                          alert('Failed to fetch files. Please check your token and repo path.');
@@ -161,30 +162,46 @@
                     alert('An error occurred. Please try again.');
                }
           }
-          function displayFiles(files) {
+          async function displayFiles(files, allFiles) {
                const fileTableBody = document.getElementById('fileTableBody');
                fileTableBody.innerHTML = '';
 
-               files.forEach(file => {
+               for (const file of files) {
                     const pathParts = file.path.split('/');
                     const projectName = pathParts[pathParts.length - 3];
                     const timestamp = pathParts[pathParts.length - 2];
                     const creationDate = ticksToDate(parseInt(timestamp)); // Chuyển đổi từ tick sang thời gian
 
+                    const propertiesJsonPath = pathParts.slice(0, -1).concat('properties.json').join('/');
+                    let propertiesFile = allFiles.find(f => f.path === propertiesJsonPath);
+                    let propertiesContent = 'N/A';
+
+                    if (propertiesFile) {
+                         cacheContent = propertiesFile.cacheContent
+                         if (!cacheContent) {
+                              try {
+                                   const response = await fetch(propertiesFile.url);
+                                   const json = await response.json();
+                                   const contentBase64 = json.content;
+                                   const content = atob(contentBase64);
+                                   propertiesContent = JSON.stringify(JSON.parse(content), null, 2);
+                                   propertiesFile.cacheContent = propertiesContent
+                                   cacheContent = propertiesContent
+                                   localStorage.setItem('githubDataTrees', JSON.stringify(allFiles));
+                              } catch (error) {
+                                   propertiesContent = 'Error loading properties';
+                              }
+                         }
+                         propertiesContent = cacheContent
+                    }
                     const row = document.createElement('tr');
                     const nameCell = document.createElement('td');
                     const pathCell = document.createElement('td');
                     const projectCell = document.createElement('td');
                     const dateCell = document.createElement('td');
+                    const propertiesCell = document.createElement('td');
 
-                    // Tạo thẻ liên kết cho tên tệp
-                    // const link = document.createElement('a');
-                    // link.href = `https://github.com/TrdHuy/TrdHuy.github.io/${file.path}`;
-                    // link.textContent = file.path.split('/').pop();
-                    // link.target = '_blank'; // Mở liên kết trong tab mới
-                    // nameCell.appendChild(link);
                     nameCell.textContent = file.path.split('/').pop(); // Lấy tên tệp
-                    // Tạo thẻ liên kết cho đường dẫn tệp
                     const pathLink = document.createElement('a');
                     pathLink.href = `https://trdhuy.github.io/${file.path}`;
                     pathLink.textContent = file.path;
@@ -193,13 +210,16 @@
 
                     projectCell.textContent = projectName;
                     dateCell.textContent = creationDate;
+                    propertiesCell.textContent = propertiesContent;
 
                     row.appendChild(nameCell);
                     row.appendChild(pathCell);
                     row.appendChild(projectCell);
                     row.appendChild(dateCell);
+                    row.appendChild(propertiesCell);
+
                     fileTableBody.appendChild(row);
-               });
+               }
 
                document.getElementById('fileTable').style.display = 'table';
           }
