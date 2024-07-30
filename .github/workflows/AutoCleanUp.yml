@@ -22,7 +22,7 @@ jobs:
      USER_NAME: TrdHuy
      USER_MAIL: trdtranduchuy@gmail.com
      CLEAN_BRANCH: ${{ github.event.inputs.branch || 'master' }}
-     CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE: "#2 Clean up CoverageReport folder" 
+     CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE: "[#2] Clean up CoverageReport folder" 
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
@@ -39,11 +39,11 @@ jobs:
             }
             $Uri = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/AutoCleanUp.ps1"
             Invoke-RestMethod -Uri $Uri -Headers $Headers -OutFile AutoCleanUp.ps1
-            & .\AutoCleanUp.ps1 -rootFolder ${{ env.COVERAGE_REPORT_FOLDER }} `
+            & .\AutoCleanUp.ps1 -rootFolder "${{ env.COVERAGE_REPORT_FOLDER }}"" `
               -githubToken ${{ env.GITHUB_TOKEN }} `
               -repo ${{ env.REPO_TO_CLEAN }} `
               -owner ${{ env.REPO_OWNER }} `
               -branch ${{ env.CLEAN_BRANCH }} `
-              -message ${{ env.CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE }} `
-              -userName ${{ env.USER_NAME }} `
-              -userMail ${{ env.USER_MAIL }}
+              -message "${{ env.CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE }}" `
+              -userName "${{ env.USER_NAME }}" `
+              -userMail "${{ env.USER_MAIL }}"
