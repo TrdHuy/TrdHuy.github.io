@@ -21,14 +21,14 @@ jobs:
      REPO_OWNER: TrdHuy
      USER_NAME: TrdHuy
      USER_MAIL: trdtranduchuy@gmail.com
-     CLEAN_BRANCH: master
+     CLEAN_BRANCH: ${{ github.event.inputs.branch || 'master' }}
      CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE: "[#2] Clean up CoverageReport folder" 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up PowerShell
-      uses: actions/setup-powershell@v1
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with: 
+        fetch-depth: 0
+        ref: ${{ env.CLEAN_BRANCH }}
 
     - name: Run AutoCleanUp script
       shell: powershell
