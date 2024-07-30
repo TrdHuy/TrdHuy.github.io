@@ -28,6 +28,7 @@ jobs:
       uses: actions/checkout@v3
       with: 
         fetch-depth: 0
+        persist-credentials: true  # This persists credentials for the subsequent Git commands
         ref: ${{ env.CLEAN_BRANCH }}
 
     - name: Run AutoCleanUp script
