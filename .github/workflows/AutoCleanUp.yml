@@ -22,7 +22,7 @@ jobs:
      USER_NAME: TrdHuy
      USER_MAIL: trdtranduchuy@gmail.com
      CLEAN_BRANCH: ${{ github.event.inputs.branch || 'master' }}
-     CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE: "[#2] Clean up CoverageReport folder" 
+     CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE: "#2 Clean up CoverageReport folder" 
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
