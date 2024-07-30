@@ -1,0 +1,48 @@
+name: AutoCleanUp
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Runs at 12:00 UTC every day
+    - cron: '0 23 * * *'  # Runs at 23:00 UTC every day
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch for version up'
+        required: true
+
+jobs:
+  cleanup:
+    runs-on: windows-latest
+    env:
+     ISLOCAL: false
+     GITHUB_TOKEN: ${{ secrets.WORK_FLOW_ACCESS_TOKEN }}
+     COVERAGE_REPORT_FOLDER: CoverageReport
+     REPO_TO_CLEAN: TrdHuy.github.io
+     REPO_OWNER: TrdHuy
+     USER_NAME: TrdHuy
+     USER_MAIL: trdtranduchuy@gmail.com
+     CLEAN_BRANCH: master
+     CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE: "[#2] Clean up CoverageReport folder" 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up PowerShell
+      uses: actions/setup-powershell@v1
+
+    - name: Run AutoCleanUp script
+      shell: powershell
+      run: |
+            $Headers = @{
+                Authorization = "token ${{ env.GITHUB_TOKEN }}"
+            }
+            $Uri = "https://raw.githubusercontent.com/TrdHuy/_TrdBuildPlugin/master/AutoCleanUp.ps1"
+            Invoke-RestMethod -Uri $Uri -Headers $Headers -OutFile AutoCleanUp.ps1
+            & .\AutoCleanUp.ps1 -rootFolder ${{ env.COVERAGE_REPORT_FOLDER }} `
+              -githubToken ${{ env.GITHUB_TOKEN }} `
+              -repo ${{ env.REPO_TO_CLEAN }} `
+              -owner ${{ env.REPO_OWNER }} `
+              -branch ${{ env.CLEAN_BRANCH }} `
+              -message ${{ env.CLEAN_COVERAGE_REPORT_FOLDER_MESSAGE }} `
+              -userName ${{ env.USER_NAME }} `
+              -userMail ${{ env.USER_MAIL }}
