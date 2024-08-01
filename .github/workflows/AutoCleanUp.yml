@@ -2,8 +2,7 @@ name: AutoCleanUp
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Runs at 12:00 UTC every day
-    - cron: '0 23 * * *'  # Runs at 23:00 UTC every day
+    - cron: '0 11 * * 5'
   workflow_dispatch:
     inputs:
       branch:
