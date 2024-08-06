@@ -1468,6 +1468,17 @@ textarea.form-input::-webkit-resizer {
     height: auto;
   }
 
+  .avatar-box img {
+    max-height: 75px;
+  }
+
+  .testimonials-avatar-box img {
+    max-height: 65px;
+  }
+
+  .modal-avatar-box img {
+    max-inline-size: fit-content;
+  }
 }
 
 
@@ -1566,6 +1577,7 @@ textarea.form-input::-webkit-resizer {
 
   .avatar-box img {
     width: 120px;
+    max-height: max-content;
   }
 
   .info-content .name {
@@ -1681,6 +1693,7 @@ textarea.form-input::-webkit-resizer {
 
   .testimonials-avatar-box img {
     width: 80px;
+    max-height: fit-content;
   }
 
   .testimonials-item-title {
