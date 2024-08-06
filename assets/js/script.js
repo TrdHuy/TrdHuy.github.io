@@ -66,7 +66,7 @@ overlay.addEventListener("click", testimonialsModalFunc);
 const iframeMap = new Map();
 function loadForm(url, container) {
   const iframeId = container.id;
-  const newUrl = url + '?iframeId=' + iframeId;
+  const newUrl = url + '?iframeId=' + iframeId + '&shouldNotifyWidth=1';
   container.src = newUrl;
 }
 document.querySelectorAll('iframe').forEach(iframe => {
