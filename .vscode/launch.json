@@ -1,0 +1,28 @@
+{
+     "version": "0.2.0",
+     "configurations": [
+       // {
+       //   "name": "Launch Live Server",
+       //   "type": "node",
+       //   "request": "launch",
+       //   "preLaunchTask": "Run Live Server",
+       //   "program": "${workspaceFolder}/${relativeFile}",
+       //   "cwd": "${workspaceFolder}",
+       //   "runtimeExecutable": "live-server"
+       // }
+       {
+         "type": "chrome",
+         "request": "launch",
+         "name": "Launch Chrome against localhost",
+         "url": "http://localhost:5500/${fileBasename}", // Ctrl + F5 in browser to refresh css Cache
+         "webRoot": "${workspaceFolder}"
+       },
+       {
+         "type": "chrome",
+         "request": "launch",
+         "name": "Launch Chrome current file",
+         "url": "file://${file}",
+         "webRoot": "${workspaceFolder}"
+       }
+     ]
+   }

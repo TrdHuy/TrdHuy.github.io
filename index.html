@@ -838,85 +838,31 @@
         - #PORTFOLIO
       -->
 
-      <article class="portfolio" data-page="portfolio">
+      <article class="portfolio" data-page="portfolio" data-src="portfolio_dashboard.html?iframeId=portfolioDashboard">
+
 
         <header>
           <h2 class="h2 article-title">Portfolio</h2>
         </header>
 
         <section class="projects">
+          <iframe class="blog-frame-container" id="portfolioDashboard" allowTransparency="true" scrolling="no"
+            loading="lazy" frameborder="0" allowfullscreen="true"></iframe>
 
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web design</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applications</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web development</button>
-            </li>
-
-          </ul>
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web design</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
-
-            </ul>
-
-          </div>
-
-          <ul class="project-list">
+          <!-- <ul class="project-list">
 
             <li class="project-item  active" data-filter-item data-category="web development">
               <a href="#">
-
                 <figure class="project-img">
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-
                   <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
                 </figure>
 
                 <h3 class="project-title">Finance</h3>
 
                 <p class="project-category">Web development</p>
-
               </a>
             </li>
 
@@ -1064,7 +1010,7 @@
               </a>
             </li>
 
-          </ul>
+          </ul> -->
 
         </section>
 
@@ -1078,14 +1024,14 @@
         - #BLOG
       -->
 
-      <article class="blog" data-page="developers">
+      <article class="blog" data-page="developers" data-src="developer_page.html?iframeId=developerPageFrame">
 
         <header>
           <h2 class="h2 article-title">Developers</h2>
         </header>
 
         <section class="blog-posts">
-          <iframe class="blog-frame-container" id="developerPageFrame" src="developer_page.html?iframeId=developerPageFrame" allowTransparency="true" scrolling="no"
+          <iframe class="blog-frame-container" id="developerPageFrame" allowTransparency="true" scrolling="no"
             frameborder="0" allowfullscreen="true"></iframe>
         </section>
       </article>

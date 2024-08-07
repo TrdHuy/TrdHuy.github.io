@@ -91,15 +91,15 @@
 }
 
 .portfolio-container h1 {
-     font-size: var(--fs-1);
+     font-size: var(--fs-3);
 }
 
 .portfolio-container h2 {
-     font-size: var(--fs-2);
+     font-size: var(--fs-4);
 }
 
 .portfolio-container h3 {
-     font-size: var(--fs-3);
+     font-size: var(--fs-5);
 }
 
 .portfolio-container p {
@@ -118,7 +118,7 @@
      bottom: 0;
      left: 0;
      width: 100%;
-     height: 3px;
+     height: 1px;
      background: var(--text-gradient-yellow);
      border-radius: 3px;
 }
