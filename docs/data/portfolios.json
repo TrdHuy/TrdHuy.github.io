@@ -12,5 +12,12 @@
     "page_avatar": "./assets/images/ee2aecfbd84f197d515c.jpg",
     "page_url": "portfolio_keyboard.html",
     "page_category": "Android application"
+  },
+  {
+    "page_id": "page_portfolio_privateaccesstoken",
+    "page_name": "Private Access Token",
+    "page_avatar": "./assets/images/59a3091192f814fe9f85.png",
+    "page_url": "portfolio_privateaccesstoken.html",
+    "page_category": "Android application"
   }
 ]
