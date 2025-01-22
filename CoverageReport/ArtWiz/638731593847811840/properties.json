@@ -1,0 +1,12 @@
+{
+  "AssemblyFilters": "+ArtWiz;-wengine",
+  "RootArtifactFolder": "CoverageReport",
+  "ModuleId": "ArtWiz",
+  "CreationDate": "2025-01-22T16:16:24.7812512+00:00",
+  "Platform": "x86",
+  "RepoContainerOwner": "TrdHuy",
+  "RetentionPeriodHours": 24,
+  "RepoContainer": "TrdHuy.github.io",
+  "NowTicks": 638731593847811840,
+  "SHA": "284629d307757ca6f69de840cd839fe274d9f156"
+}
