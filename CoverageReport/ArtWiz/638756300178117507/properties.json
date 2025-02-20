@@ -1,0 +1,12 @@
+{
+  "RepoContainerOwner": "TrdHuy",
+  "RepoContainer": "TrdHuy.github.io",
+  "ModuleId": "ArtWiz",
+  "AssemblyFilters": "+ArtWiz;-wengine",
+  "RetentionPeriodHours": 24,
+  "SHA": "c23539106b25f28d944a633d591463f5392c93a3",
+  "NowTicks": 638756300178117507,
+  "Platform": "x64",
+  "RootArtifactFolder": "CoverageReport",
+  "CreationDate": "2025-02-20T06:33:37.8155041+00:00"
+}
